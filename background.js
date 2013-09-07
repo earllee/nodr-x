@@ -20,7 +20,7 @@ var pushUpdate = function(type, sendInfo) {
   });
 };
 
-chrome.tabs.getSelected(null, function(tab) {
+/*chrome.tabs.getSelected(null, function(tab) {
   if (!link_followed) {
      chrome.extension.getBackgroundPage().console.log("new page");
   } else {
@@ -35,16 +35,25 @@ chrome.tabs.getSelected(null, function(tab) {
   chrome.extension.getBackgroundPage().console.log(tabTitle);
   chrome.extension.getBackgroundPage().console.log(tabURL);
 });
-
+*/
 // Browser action listener
-chrome.browserAction.onClicked.addListener(test);
+//chrome.browserAction.onClicked.addListener(test);
 
 // Push new web page visit to server
 chrome.history.onVisited.addListener(pushUpdate);
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
- if (request.linkfollowed === "yes") {
+ if (request.type === "load")
+ {
+     
+  chrome.extension.getBackgroundPage().console.log("Navigate: " + request.page_url + " " + request.page_title);
+      if (link_followed == true)
+      {
+          chrome.extension.getBackgroundPage().console.log("link from: " + parentURL + " " + linkText);
+      }
+ }
+ else if (request.linkfollowed === "yes") {
 	link_followed = true;
 	parentURL =  request.parent_URL;
 	linkText = request.link_Text;
