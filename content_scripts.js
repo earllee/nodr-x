@@ -4,7 +4,6 @@ var links = document.getElementsByTagName('a');
 var length = links.length;
 var saveLinkText = function(e) {
   // Save link text
-  e.preventDefault();
   console.log(e);
   var currURL = document.URL;
   var linkText = e.target.innerHTML;
@@ -16,5 +15,4 @@ for (var i = 0; i < length; i++) {
   links[i].addEventListener('click', saveLinkText , false); 
 }
 
-var linkslol = jQuery('a');
-console.log(linkslol);
+
