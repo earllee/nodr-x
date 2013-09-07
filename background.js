@@ -1,13 +1,16 @@
-var link_followed = false;
-var parentURL = "";
-var linkText = "";
-var linkURL = "";
+var linkFollowed = false;
+var parentURL = '';
+var parentTitle = '';
+var currURL = '';
+var currTitle = '';
+var linkText = '';
+var linkURL = '';
 
 var pushUpdate = function(type, sendInfo) { 
   $.ajax({
-       type: "POST",
-        url: "http://node.me/" + type,
-        dataType: "json",
+       type: 'POST',
+        url: 'http://node.me/' + type,
+        dataType: 'json',
         success: function (msg) {
            if (msg) {
              // Do nothing
@@ -21,15 +24,15 @@ var pushUpdate = function(type, sendInfo) {
 };
 
 /*chrome.tabs.getSelected(null, function(tab) {
-  if (!link_followed) {
-     chrome.extension.getBackgroundPage().console.log("new page");
+  if (!linkFollowed) {
+     chrome.extension.getBackgroundPage().console.log('new page');
   } else {
-     chrome.extension.getBackgroundPage().console.log("link from:");
+     chrome.extension.getBackgroundPage().console.log('link from:');
      chrome.extension.getBackgroundPage().console.log(parentURL);
      chrome.extension.getBackgroundPage().console.log(linkText);
      chrome.extension.getBackgroundPage().console.log(linkURL);
   }
-  link_followed = false;
+  linkFollowed = false;
   var tabTitle = tab.title;
   var tabURL = tab.url;
   chrome.extension.getBackgroundPage().console.log(tabTitle);
@@ -44,19 +47,15 @@ chrome.history.onVisited.addListener(pushUpdate);
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
- if (request.type === "load")
- {
-     
-  chrome.extension.getBackgroundPage().console.log("Navigate: " + request.page_url + " " + request.page_title);
-      if (link_followed == true)
-      {
-          chrome.extension.getBackgroundPage().console.log("link from: " + parentURL + " " + linkText);
-      }
- }
- else if (request.linkfollowed === "yes") {
-	link_followed = true;
-	parentURL =  request.parent_URL;
-	linkText = request.link_Text;
-	linkURL = request.link_URL;
- }
+  if (request.type === 'load') {
+    chrome.extension.getBackgroundPage().console.log('Navigate: ' + request.pageURL + ' ' + request.pageTitle);
+    if (linkFollowed) {
+      chrome.extension.getBackgroundPage().console.log('link from: ' + parentURL + ' ' + linkText);
+    }
+  } else if (request.linkFollowed) {
+    linkFollowed = true;
+    parentURL =  request.parentURL;
+    linkText = request.linkText;
+    linkURL = request.linkURL;
+  }
 });
