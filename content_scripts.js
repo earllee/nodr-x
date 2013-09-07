@@ -8,9 +8,9 @@ var saveLinkText = function(e) {
   var currURL = document.URL;
   var linkText = e.target.innerHTML;
   var linkURL = e.target.href;
+  chrome.runtime.sendMessage({linkfollowed: "yes", parent_URL: currURL, link_Text: linkText, link_URL: linkURL}, function(response){ });
 };
 
-  link_followed = true;
 // Set up link handlers
 for (var i = 0; i < length; i++) {
   links[i].addEventListener('click', saveLinkText , false); 
