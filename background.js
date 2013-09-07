@@ -1,61 +1,53 @@
-//function alertClick(HistoryItem result) {
-// alert("ASD");
-//}
+var link_followed = false;
+var parentURL = "";
+var linkText = "";
+var linkURL = "";
 
-//chrome.history.onVisited.addListener(alertClick());
-link_followed = false;
-the_parentURL = "";
-the_linkText = "";
-the_linkURL = "";
+var pushUpdate = function(type, sendInfo) { 
+  $.ajax({
+       type: "POST",
+        url: "http://node.me/" + type,
+        dataType: "json",
+        success: function (msg) {
+           if (msg) {
+             // Do nothing
+           }
+           else {
+             // Force login
+           }
+        },
+        data: sendInfo 
+  });
+};
 
-function test()
-{
- chrome.extension.getBackgroundPage().console.log("in test");
-}
-function test2(result)
-{
- chrome.extension.getBackgroundPage().console.log("pagevisited: ");
-// chrome.extension.getBackgroundPage().console.log(result.title);
- 
 chrome.tabs.getSelected(null, function(tab) {
-  if (!link_followed)
-  {
+  if (!link_followed) {
      chrome.extension.getBackgroundPage().console.log("new page");
-  }
-  else
-  {
+  } else {
      chrome.extension.getBackgroundPage().console.log("link from:");
-     chrome.extension.getBackgroundPage().console.log(the_parentURL);
-     chrome.extension.getBackgroundPage().console.log(the_linkText);
-     chrome.extension.getBackgroundPage().console.log(the_linkURL);
-
+     chrome.extension.getBackgroundPage().console.log(parentURL);
+     chrome.extension.getBackgroundPage().console.log(linkText);
+     chrome.extension.getBackgroundPage().console.log(linkURL);
   }
-link_followed = false;
-   var myTitle = tab.title;
-   var myURL = tab.url;
-   chrome.extension.getBackgroundPage().console.log(myTitle);
-   chrome.extension.getBackgroundPage().console.log(myURL);
+  link_followed = false;
+  var tabTitle = tab.title;
+  var tabURL = tab.url;
+  chrome.extension.getBackgroundPage().console.log(tabTitle);
+  chrome.extension.getBackgroundPage().console.log(tabURL);
 });
 
- //chrome.extension.getBackgroundPage().console.log(thetitle);
-/* switch (result.transition):
- {
-  case 
- }*/
-}
-
+// Browser action listener
 chrome.browserAction.onClicked.addListener(test);
 
-chrome.history.onVisited.addListener(test2);
+// Push new web page visit to server
+chrome.history.onVisited.addListener(pushUpdate);
 
-chrome.runtime.onMessage.addListener(function (request, response, sendResponse)
-{
- if (request.linkfollowed === "yes")
- {
+// Receive data from content_scripts
+chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
+ if (request.linkfollowed === "yes") {
 	link_followed = true;
-	the_parentURL =  request.parent_URL;
-	the_linkText = request.link_Text;
-	the_linkURL = request.link_URL;
+	parentURL =  request.parent_URL;
+	linkText = request.link_Text;
+	linkURL = request.link_URL;
  }
-}
-);
+});
