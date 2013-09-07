@@ -16,3 +16,5 @@ for (var i = 0; i < length; i++) {
   links[i].addEventListener('click', saveLinkText , false); 
 }
 
+var linkslol = jQuery('a');
+console.log(linkslol);
