@@ -7,6 +7,7 @@ var linkText = '';
 var linkURL = '';
 
 var pushUpdate = function() { 
+  console.log('Var dump: ' + linkURL + linkText + parentURL + parentTitle);
   var type = (linkFollowed) ? 'new_link' : 'new_node';
 
   var sendInfo = {
@@ -59,11 +60,17 @@ chrome.history.onVisited.addListener(function(){});
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
-  if (request.type === 'load') {
+  console.log('Req');
+  console.log(request);
+  console.log('Res');
+  console.log(response);
+  if (request.type == "load") {
+    console.log(parentTitle);
+    console.log(parentURL);
     currURL = request.pageURL;
     currTitle = request.pageTitle;
     pushUpdate();
-  } else if (request.type === 'link') {
+  } else if (request.type == "link") {
     console.log('link clicked');
     linkFollowed = true;
     parentTitle = request.parentTitle;

@@ -9,7 +9,7 @@ var saveLinkText = function(e) {
   var linkText = e.target.innerHTML;
   var linkURL = e.target.href;
   chrome.runtime.sendMessage({
-    type: 'link',
+    type: "link",
     linkFollowed: true,
     parentTitle : currTitle,
     parentURL: currURL, 
