@@ -1,50 +1,44 @@
 var linkFollowed = false;
-var parentURL = '';
-var parentTitle = '';
-var currURL = '';
-var currTitle = '';
-var linkText = '';
-var linkURL = '';
+var parentURL = "";
+var linkText = "";
+var linkURL = "";
+
+var currURL = "";
+var currTitle = "";
+var parentTitle ="";
 
 var pushUpdate = function() { 
-  console.log('Var dump: ' + linkURL + linkText + parentURL + parentTitle);
   var type = (linkFollowed) ? 'new_link' : 'new_node';
 
   var sendInfo = {
-    currURL : currURL,
-    currTitle : currTitle,
-    linkURL : '',
-    linkText : '',
-    parentURL : '',
-    parentText : '',
-    direct : true
+    url : currURL,
+    title : currTitle
   };
 
   if (linkFollowed) {
-    sendInfo.linkURL = linkURL;
-    sendInfo.linkText = linkText;
-    sendInfo.parentURL = parentURL;
-    sendInfo.parentTitle = parentTitle;
-    sendInfo.direct = false;
+    sendInfo = {
+      parent : {url : parentURL, title : parentTitle},
+      child : {url : currURL, title : currTitle}
+    };
   }
 
   console.log(sendInfo);
 
   $.ajax({
-       type: 'POST',
-        url: 'http://nodr.me/' + type,
-        dataType: 'json',
-        success: function (msg) {
-           if (msg) {
-             // Do nothing
-           }
-           else {
-             // Force login
-           }
-        },
-        data: sendInfo,
-        complete: function(){
-        }
+    type: 'POST',
+    url: 'http://nodr.me/' + type,
+    dataType: 'json',
+    success: function (msg) {
+      if (msg) {
+        // Do nothing
+      }
+      else {
+        // Force login
+      }
+    },
+    data: sendInfo,
+    complete: function(){
+    }
   });
 
   linkFollowed = false;
@@ -56,25 +50,20 @@ var pushUpdate = function() {
 //chrome.browserAction.onClicked.addListener(test);
 
 // Push new web page visit to server
-chrome.history.onVisited.addListener(function(){});
+// chrome.history.onVisited.addListener(pushUpdate);
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
-  console.log('Req');
-  console.log(request);
-  console.log('Res');
-  console.log(response);
-  if (request.type == "load") {
-    console.log(parentTitle);
-    console.log(parentURL);
+  if (request.type === "load") {
     currURL = request.pageURL;
     currTitle = request.pageTitle;
-    pushUpdate();
-  } else if (request.type == "link") {
-    console.log('link clicked');
+    if (currURL !== '') {
+      pushUpdate();
+    }
+  } else if (request.linkFollowed === "yes") {
     linkFollowed = true;
-    parentTitle = request.parentTitle;
     parentURL =  request.parentURL;
+    parentTitle = request.parentTitle;
     linkText = request.linkText;
     linkURL = request.linkURL;
   }
