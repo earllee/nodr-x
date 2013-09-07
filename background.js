@@ -12,6 +12,10 @@ var pushUpdate = function() {
   var sendInfo = {
     currURL : currURL,
     currTitle : currTitle,
+    linkURL : '',
+    linkText : '',
+    parentURL : '',
+    parentText : '',
     direct : true
   };
 
@@ -51,17 +55,16 @@ var pushUpdate = function() {
 //chrome.browserAction.onClicked.addListener(test);
 
 // Push new web page visit to server
-chrome.history.onVisited.addListener(pushUpdate);
+chrome.history.onVisited.addListener(function(){});
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
-    currURL = request.pageURL;
-    currTitle = request.pageTitle;
   if (request.type === 'load') {
     currURL = request.pageURL;
     currTitle = request.pageTitle;
-
+    pushUpdate();
   } else if (request.type === 'link') {
+    console.log('link clicked');
     linkFollowed = true;
     parentTitle = request.parentTitle;
     parentURL =  request.parentURL;
