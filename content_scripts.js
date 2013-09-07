@@ -4,12 +4,14 @@ var links = document.getElementsByTagName('a');
 var length = links.length;
 var saveLinkText = function(e) {
   // Save link text
+  var currText = document.title;
   var currURL = document.URL;
   var linkText = e.target.innerHTML;
   var linkURL = e.target.href;
   chrome.runtime.sendMessage({
-    type: "link",
+    type: 'link',
     linkFollowed: true,
+    parentTitle : currTitle,
     parentURL: currURL, 
     linkText: linkText, 
     linkURL: linkURL
@@ -22,7 +24,7 @@ for (var i = 0; i < length; i++) {
 }
 
 chrome.runtime.sendMessage({
-  type: "load", 
+  type: 'load', 
   pageURL: document.URL, 
-  pageTitle: document.getElementsByTagName("title")[0].innerHTML
+  pageTitle: document.getElementsByTagName('title')[0].innerHTML
   }, function(response){});
