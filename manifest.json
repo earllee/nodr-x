@@ -7,9 +7,12 @@
   "background": { "scripts": ["background.js"]},
   "content_scripts": [ 
 	{
-	"matches": ["http://*/*"], "js": ["jquery.js", "tracking.js"]
+	"matches": ["http://*/*"], "js": ["tracking.js"]
 	}
   ],
+//  "web_accessible_resources": [
+//   "jquery-2.0.2.min.map"
+//  ],
   "permissions": [
     "history", "tabs", "http://*/*"
   ],

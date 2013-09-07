@@ -1,5 +1,5 @@
-$('a').live('mousedown', function(){
+$('a').on('click', function(){
 
 console.log("test");
 //alert($(this).attr('href'));
-)};
+});
