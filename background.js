@@ -26,8 +26,8 @@ var pushUpdate = function() {
 
   $.ajax({
     type: 'POST',
-    url: 'http://nodr.me/' + type,
-    dataType: 'json',
+    url: 'http://www.nodr.me/' + type,
+    dataType: 'jsonp',
     success: function (msg) {
       if (msg) {
         // Do nothing
