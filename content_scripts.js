@@ -10,6 +10,7 @@ var saveLinkText = function(e) {
   var linkURL = e.target.href;
 };
 
+  link_followed = true;
 // Set up link handlers
 for (var i = 0; i < length; i++) {
   links[i].addEventListener('click', saveLinkText , false); 
