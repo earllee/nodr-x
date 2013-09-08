@@ -26,20 +26,27 @@ var pushUpdate = function() {
 
   $.ajax({
     type: 'POST',
-    url: 'http://www.nodr.me/' + type,
-    dataType: 'jsonp',
+    url: 'https://www.nodr.me/' + type,
+    dataType: 'json',
     success: function (msg) {
       if (msg) {
         // Do nothing
+        console.log(msg);
       }
       else {
+        console.log(msg);
         // Force login
       }
     },
     data: sendInfo,
-    complete: function(){
+    complete: function(e, status){
+      console.log(status);
+    },
+    error: function(i,s,e) {
+      console.log(e);
+      }
     }
-  });
+  );
 
   linkFollowed = false;
   linkText = '';
