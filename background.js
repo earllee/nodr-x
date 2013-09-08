@@ -1,11 +1,16 @@
+var NOTRECORDING = 0;
+var PAUSED = 1;
+var RECORDING = 2;
+
 var linkFollowed = false;
 var parentURL = "";
 var linkText = "";
 var linkURL = "";
 var currURL = "";
 var currTitle = "";
-var parentTitle ="";
-var recordingState = false;
+var parentTitle = "";
+var recs = {};
+var recordingState = NOTRECORDING;
 
 function logger(string) {
   chrome.extension.getBackgroundPage().console.log(string);
@@ -15,9 +20,40 @@ function setStatus(string) {
   $("#status").text(string);
 }
 
+function setupHtml() {
+  if (chrome.extension.getBackgroundPage().recordingState >= PAUSED) {
+    $("#recording").show();
+    $("#record").hide();
+    setStatus("Recording");
+  }
+  if (chrome.extension.getBackgroundPage().recordingState == PAUSED) {
+    $("#pause").hide();
+    $("#play").show();
+    setStatus("Paused");
+  }
+}
+
+function renderRecs() {
+  logger("listing");
+  $("#listing").html(chrome.extension.getBackgroundPage().recs);
+}
+
+function authenticateUser() {
+  $.get("http://www.nodr.me/user").error(function() {
+    chrome.tabs.create({'url': "http://www.nodr.me/auth/facebook/callback"});
+  });
+}
+
+function loadRecommendations() {
+  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
+    chrome.extension.getBackgroundPage().recs = data;
+    renderRecs();
+  });
+}
+
 function pauseSession() {
-  if (chrome.extension.getBackgroundPage().recordingState == true) {
-    chrome.extension.getBackgroundPage().recordingState = false;
+  if (chrome.extension.getBackgroundPage().recordingState == RECORDING) {
+    chrome.extension.getBackgroundPage().recordingState = PAUSED;
     setStatus("Paused");
     $("#pause").hide();
     $("#play").show();
@@ -25,8 +61,8 @@ function pauseSession() {
 }
 
 function playSession() {
-  if (chrome.extension.getBackgroundPage().recordingState == false) {
-    chrome.extension.getBackgroundPage().recordingState = true;
+  if (chrome.extension.getBackgroundPage().recordingState <= PAUSED) {
+    chrome.extension.getBackgroundPage().recordingState = RECORDING;
     setStatus("Recording");
     $("#play").hide();
     $("#pause").show();
@@ -34,9 +70,9 @@ function playSession() {
 }
 
 function recordSession() {
-  if (chrome.extension.getBackgroundPage().recordingState == false) {
+  if (chrome.extension.getBackgroundPage().recordingState == NOTRECORDING) {
     $.get("http://www.nodr.me/new_graph", function(data) {
-      chrome.extension.getBackgroundPage().recordingState = true;
+      chrome.extension.getBackgroundPage().recordingState = RECORDING;
       setStatus("Recording");
       $("#record").hide();
       $("#recording").show();
@@ -45,18 +81,18 @@ function recordSession() {
 }
 
 function stopSession() {
-  if (chrome.extension.getBackgroundPage().recordingState === true) {
+  if (chrome.extension.getBackgroundPage().recordingState >= PAUSED) {
     $.get("http://www.nodr.me/end_graph", function(data) {
-      chrome.extension.getBackgroundPage().recordingState = false;
+      chrome.extension.getBackgroundPage().recordingState = NOTRECORDING;
       setStatus("Not Recording");
       $("#recording").hide();
+      $("#pause")
       $("#record").show();
     });
   }
 }
 
 function pushUpdate() {
-  
   console.log("recording state is " + recordingState); 
   if (recordingState === false) {
     linkFollowed = false;
@@ -87,6 +123,8 @@ function pushUpdate() {
       logger(data);
     });
   }
+  
+  loadRecommendations();
 
   var myText = encodeURIComponent(JSON.stringify(sendInfo));
   linkFollowed = false;
@@ -120,6 +158,10 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
     alert("hellO");
   }
 });
+
+// Initialize
+setupHtml();
+authenticateUser();
 
 // Events
 $("#pause").click(function() {
