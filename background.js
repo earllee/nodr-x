@@ -12,6 +12,8 @@ var parentTitle = "";
 var recs = {};
 var recordingState = NOTRECORDING;
 
+var INITIALIZED = 0;
+
 function logger(string) {
   chrome.extension.getBackgroundPage().console.log(string);
 }
@@ -180,4 +182,8 @@ $("#stop").click(function() {
 
 $("#record").click(function() {
   recordSession();
+});
+
+$("#nodrlogo").click(function() {
+   chrome.tabs.create({'url': "http://www.nodr.me/"});
 });
