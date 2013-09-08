@@ -6,16 +6,16 @@ var linkURL = "";
 var currURL = "";
 var currTitle = "";
 var parentTitle ="";
-recording_state = "on";
+var recordingState = false;
 
 var pushUpdate = function() {
-console.log("recording state is " + recording_state); 
-  if (recording_state === "off" || recording_state === "pause")
+console.log("recording state is " + recordingState); 
+  if (recordingState === false)
   {
     linkFollowed = false;
     linkText = '';
     linkURL = '';
-    console.log("recording state is " + recording_state + " not pushing");
+    console.log("recording state is " + recordingState + " not pushing");
     return;
   }
 console.log("pushing... " + currURL);
@@ -106,7 +106,8 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 });
 
 $("#pause").click(function() {
-	recording_state = "pause";
+  console.log(window.recordingState);
+	recordingState = "pause";
 	alert("pause");
 });
 
