@@ -46,15 +46,13 @@ console.log(myText);
 
 /*  $.ajax({
     type: 'POST',
-    url: 'https://www.nodr.me/' + type,
-    dataType: 'json',
+    url: 'http://www.nodr.me/' + type,
+    dataType: 'jsonp',
     success: function (msg) {
       if (msg) {
         // Do nothing
-        console.log(msg);
       }
       else {
-        console.log(msg);
         // Force login
       }
     },
