@@ -33,11 +33,6 @@ function setupHtml() {
   }
 }
 
-function renderRecs() {
-  chrome.extension.getBackgroundPage().console.log("listing")
-  $("#listing").html(chrome.extension.getBackgroundPage().recs);
-}
-
 function authenticateUser() {
   $.get("http://www.nodr.me/user").error(function() {
     chrome.tabs.create({'url': "http://www.nodr.me/auth/facebook/callback"});
@@ -45,13 +40,16 @@ function authenticateUser() {
 }
 
 function loadRecommendations() {
-  chrome.extension.getBackgroundPage().console.log("current url", currURL);
-  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
-    chrome.extension.getBackgroundPage().recs = data;
-    chrome.extension.getBackgroundPage().console.log(chrome.extension.getBackgroundPage().recs);
-    renderRecs();
+  chrome.tabs.getSelected(null, function(tab) {
+    if (tab) {
+      chrome.extension.getBackgroundPage().console.log("window.location", tab.url, currURL);
+      $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(tab.url), function(data) {
+        for(i = 0; i < data.length; i++) {
+          $("#listing").append("<div data-url='" + data[i].url + "' class='rec-box'>" + data[i].title + "</div>");
+        }
+      });
+    }
   });
-
 }
 
 function pauseSession() {
@@ -128,8 +126,6 @@ function pushUpdate() {
     });
   }
   
-  loadRecommendations();
-
   var myText = encodeURIComponent(JSON.stringify(sendInfo));
   linkFollowed = false;
   linkText = '';
@@ -166,7 +162,7 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 // Initialize
 setupHtml();
 authenticateUser();
-renderRecs();
+loadRecommendations();
 
 // Events
 $("#pause").click(function() {
@@ -186,5 +182,9 @@ $("#record").click(function() {
 });
 
 $("#nodrlogo").click(function() {
-   chrome.tabs.create({'url': "http://www.nodr.me/"});
+  chrome.tabs.create({'url': "http://www.nodr.me/"});
 });
+
+$("#listing .rec-box").click(function(event) {
+  chrome.tabs.create({'url': "http://www.nodr.me"});
+})
