@@ -41,22 +41,20 @@ function authenticateUser() {
 
 function loadRecommendations() {
   chrome.tabs.getSelected(null, function(tab) {
-    if (tab) {
-      chrome.extension.getBackgroundPage().console.log("window.location", tab.url, currURL);
-      $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(tab.url), function(data) {
-        if (data.length > 0) {
-          for(i = 0; i < data.length; i++) {
-            $("#listing").append("<div data-url='" + data[i].url + "' class='rec-box'>" + data[i].title + "</div>");
-          }
-        } else {
-          $("#listing").html("We don't have any recommendations for you");
+    $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(tab.url), function(data) {
+      if (data.length > 0) {
+        $("#listing").html("");
+        for(i = 0; i < data.length; i++) {
+          $("#listing").append("<div data-url='" + data[i].url + "' class='rec-box'>" + data[i].title + "</div>");
         }
-        
-        $(".rec-box").click(function(event) {
-          chrome.tabs.create({'url': $(event.target).data("url")});
-        });
+      } else {
+        $("#listing").html("We don't have any recommendations for you");
+      }
+      
+      $(".rec-box").click(function(event) {
+        chrome.tabs.create({'url': $(event.target).data("url")});
       });
-    }
+    });
   });
 }
 
