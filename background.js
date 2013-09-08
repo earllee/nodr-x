@@ -6,7 +6,7 @@ var linkURL = "";
 var currURL = "";
 var currTitle = "";
 var parentTitle ="";
-recording_state = "on";
+var recording_state = "on";
 
 var pushUpdate = function() {
 console.log("recording state is " + recording_state); 
@@ -106,7 +106,7 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 });
 
 $("#pause").click(function() {
-	recording_state = "pause";
+	chrome.extension.getBackgroundPage().recording_state = "pause";
 	alert("pause");
 });
 
