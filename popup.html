@@ -12,31 +12,35 @@
 
   <nav class="navbar" role="navigation">
     <a href="http://www.nodr.me" class="navbar-brand">Nodr</a>
-    <div class="btn-group pull-right" id="navbar-buttons">
-      <button id="record" class="btn btn-default">
-        <i class="icon-circle white-icon"></i>
+    <div class="btn-group pull-right" id="record">
+      <button class="btn btn-default">
+        <i class="icon-circle white-icon"></i> Record
       </button>
+    </div>
+    <div class="btn-group pull-right" id="recording" style="display: none">
       <button id="pause" class="btn btn-default">
-        <i class="icon-pause white-icon"></i>
+        <i class="icon-pause white-icon"></i> Pause
+      </button>
+      <button id="play" class="btn btn-default" style="display: none">
+        <i class="icon-play white-icon"></i> Play
       </button>
       <button id="stop" class="btn btn-default">
-        <i class="icon-stop white-icon"></i>
+        <i class="icon-stop white-icon"></i> Stop
       </button>
     </div>
   </nav>
-  
+    
   <div id="listing">
     <div class="listing-message">
       <i class="ajax-spinner"></i>
       <p>Loading...</p>
     </div>
-    <!-- <div class="rec-box">
-          <span class="headline">Obama’s Battle for Votes on Syria Strike Is Taut and Uphill</span>
-          <p class="byline">NYTimes.com - by Mark Landler and Jonathan Weisman</p>
-        </div> -->
   </div>
   
-  <div id="see-more">More Recommendations...</div>
+  <div id="see-more">
+    <div class="pull-left" id="status">Not Recording</div>
+    <div class="pull-right">See More</div>
+  </div>
 
   </body>
     <script type="text/javascript" src="jquery-2.0.3.js"></script>

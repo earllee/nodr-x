@@ -7,20 +7,52 @@ var currTitle = "";
 var parentTitle ="";
 var recordingState = false;
 
+function logger(string) {
+  chrome.extension.getBackgroundPage().console.log(string);
+}
+
+function setStatus(string) {
+  $("#status").text(string);
+}
+
 function pauseSession() {
-  chrome.extension.getBackgroundPage().console.log("pause");
+  if (chrome.extension.getBackgroundPage().recordingState == true) {
+    chrome.extension.getBackgroundPage().recordingState = false;
+    setStatus("Paused");
+    $("#pause").hide();
+    $("#play").show();
+  }
 }
 
 function playSession() {
-  chrome.extension.getBackgroundPage().console.log("play");
+  if (chrome.extension.getBackgroundPage().recordingState == false) {
+    chrome.extension.getBackgroundPage().recordingState = true;
+    setStatus("Recording");
+    $("#play").hide();
+    $("#pause").show();
+  }
 }
 
 function recordSession() {
-  
+  if (chrome.extension.getBackgroundPage().recordingState == false) {
+    $.get("http://www.nodr.me/new_graph", function(data) {
+      chrome.extension.getBackgroundPage().recordingState = true;
+      setStatus("Recording");
+      $("#record").hide();
+      $("#recording").show();
+    });
+  }
 }
 
 function stopSession() {
-  
+  if (chrome.extension.getBackgroundPage().recordingState === true) {
+    $.get("http://www.nodr.me/end_graph", function(data) {
+      chrome.extension.getBackgroundPage().recordingState = false;
+      setStatus("Not Recording");
+      $("#recording").hide();
+      $("#record").show();
+    });
+  }
 }
 
 function pushUpdate() {
@@ -81,4 +113,16 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 // Events
 $("#pause").click(function() {
 	pauseSession();
+});
+
+$("#play").click(function() {
+	playSession();
+});
+
+$("#stop").click(function() {
+  stopSession();
+});
+
+$("#record").click(function() {
+  recordSession();
 });

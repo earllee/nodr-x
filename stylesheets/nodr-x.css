@@ -31,7 +31,7 @@ h4 {
   border-bottom: 1px solid #dadada;
 }
 
-#navbar-buttons {
+.pull-right {
   margin-right: 10px;
   margin-top: 5px;
 }
@@ -66,6 +66,7 @@ h4 {
 
 .rec-box {
   height: 70px;
+  padding-top: 5px;
   border-bottom: 1px solid #ddd;
   box-sizing: box-border;
 }
@@ -75,7 +76,7 @@ h4 {
 
 #listing {
   margin: 0px 5px 0px 5px;
-  height: 280px;
+  min-height: 100px;
 }
 
 .listing-message {
@@ -97,10 +98,20 @@ h4 {
 }
 
 #see-more {
-  text-align: center;
-  vertical-align: middle;
+  vertical-align: top;
   border-top: 1px solid #dadada;
   background: #fafafa;
+  height: 40px;
+  padding: 0 10px;
+}
+
+#status {
+  font-style: italic;
+}
+
+#see-more .pull-right,
+#see-more .pull-left {
+  margin-top: 0px;
   line-height: 40px;
 }
 
