@@ -122,14 +122,10 @@ function pushUpdate() {
     };
 	
 	  var url = "http://www.nodr.me/new_link?params=" + encodeURIComponent(JSON.stringify(sendInfo));
-	  $.get(url, function (data) {
-      logger(data);
-	  });
+	  $.get(url);
   } else {
     var url = "http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo));
-    $.get(url, function (data) {
-      logger(data);
-    });
+    $.get(url);
   }
   
   var myText = encodeURIComponent(JSON.stringify(sendInfo));
@@ -140,10 +136,6 @@ function pushUpdate() {
 
 chrome.browserAction.onClicked.addListener(function (request) {
   chrome.extension.getBackgroundPage().console.log("HELLO");
-});
-
-chrome.extension.onRequest.addListener(function (request, response) {
-  alert("HELLO");
 });
 
 // Receive data from content_scripts
