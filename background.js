@@ -21,10 +21,30 @@ var pushUpdate = function() {
       child : {url : currURL, title : currTitle}
     };
   }
-
+//  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
+$.getJSON("http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
+	console.log(data);
+});
   console.log(sendInfo);
 
-  $.ajax({
+  var myText = JSON.stringify(sendInfo);
+
+myText = encodeURIComponent(myText);
+console.log(myText);
+console.log(encodeURIComponent(myText));
+//  myText = encodeURI(myText);
+console.log(myText);
+
+/*
+  $.getJSON("http://www.nodr.me/new_link?" + myText, function(data) { 
+	console.log(data);
+});*/
+ 
+// $.get("http://www.nodr.me/new_graph" /*+ myText*/, function(data) { 
+//	console.log(data);
+//});
+
+/*  $.ajax({
     type: 'POST',
     url: 'http://www.nodr.me/' + type,
     dataType: 'jsonp',
@@ -37,9 +57,10 @@ var pushUpdate = function() {
       }
     },
     data: sendInfo,
-    complete: function(){
+    complete: function(response, status){
+ console.log(status);
     }
-  });
+  });*/
 
   linkFollowed = false;
   linkText = '';
