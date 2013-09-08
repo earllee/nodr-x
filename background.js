@@ -56,6 +56,7 @@ function stopSession() {
 }
 
 function pushUpdate() {
+  
   console.log("recording state is " + recordingState); 
   if (recordingState === false) {
     linkFollowed = false;
@@ -77,13 +78,13 @@ function pushUpdate() {
     };
 	
 	  var url = "http://www.nodr.me/new_link?params=" + encodeURIComponent(JSON.stringify(sendInfo));
-	  $.getJSON(url, function (data) {
-
+	  $.get(url, function (data) {
+      logger(data);
 	  });
   } else {
     var url = "http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo));
-    $.getJSON(url, function (data) {
-      
+    $.get(url, function (data) {
+      logger(data);
     });
   }
 
@@ -92,6 +93,10 @@ function pushUpdate() {
   linkText = '';
   linkURL = '';
 };
+
+chrome.extension.onRequest.addListener(function (request, response) {
+  alert("HELLO");
+});
 
 // Receive data from content_scripts
 chrome.runtime.onMessage.addListener(function (request, response, sendResponse) {
@@ -107,6 +112,8 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
     parentTitle = request.parentTitle;
     linkText = request.linkText;
     linkURL = request.linkURL;
+  } else if (request.directive === "popup-click") {
+    alert("hellO");
   }
 });
 
