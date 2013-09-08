@@ -6,11 +6,11 @@ var linkURL = "";
 var currURL = "";
 var currTitle = "";
 var parentTitle ="";
-var recording_state = "on";
+var recording_state = "stop";
 
 var pushUpdate = function() {
 console.log("recording state is " + recording_state); 
-  if (recording_state === "off" || recording_state === "pause")
+  if (recording_state === "stop" || recording_state === "pause")
   {
     linkFollowed = false;
     linkText = '';
@@ -106,7 +106,24 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 });
 
 $("#pause").click(function() {
-	chrome.extension.getBackgroundPage().recording_state = "pause";
-	alert("pause");
+  chrome.extension.getBackgroundPage().recording_state = "pause";
 });
 
+$("#stop").click(function() {
+  if (chrome.extension.getBackgroundPage().recording_state !== "stop")
+    $.getJSON("http://www.nodr.me/end_graph", function (data) {});
+
+  chrome.extension.getBackgroundPage().recording_state = "stop";
+  chrome.extension.getBackgroundPage().console.log("stopped");
+});
+
+$("#record").click(function() {
+  if (chrome.extension.getBackgroundPage().recording_state === "stop")
+  {
+     $.getJSON("http://www.nodr.me/new_graph", function (data) {
+     });
+  }
+
+  chrome.extension.getBackgroundPage().recording_state = "record";
+  chrome.extension.getBackgroundPage().console.log("record");
+});
