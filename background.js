@@ -6,16 +6,19 @@ var linkURL = "";
 var currURL = "";
 var currTitle = "";
 var parentTitle ="";
-var recording_state = "on";
+recording_state = "on";
 
-var pushUpdate = function() { 
-  if (recording_state === "off")
+var pushUpdate = function() {
+console.log("recording state is " + recording_state); 
+  if (recording_state === "off" || recording_state === "pause")
   {
     linkFollowed = false;
     linkText = '';
     linkURL = '';
+    console.log("recording state is " + recording_state + " not pushing");
     return;
   }
+console.log("pushing... " + currURL);
   var type = (linkFollowed) ? 'new_link' : 'new_node';
 
   var sendInfo = {
@@ -30,24 +33,20 @@ var pushUpdate = function() {
     };
 	
 	$.getJSON("http://www.nodr.me/new_link?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
-		console.log(data);
+//		console.log(data);
 	});
   }
 else {
 $.getJSON("http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
-	console.log(data);
+//	console.log(data);
 });
 }
 //  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
-  console.log(sendInfo);
+//  console.log(sendInfo);
 
   var myText = JSON.stringify(sendInfo);
 
 myText = encodeURIComponent(myText);
-console.log(myText);
-console.log(encodeURIComponent(myText));
-//  myText = encodeURI(myText);
-console.log(myText);
 
 /*
   $.getJSON("http://www.nodr.me/new_link?" + myText, function(data) { 
@@ -105,3 +104,9 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
     linkURL = request.linkURL;
   }
 });
+
+$("#pause").click(function() {
+	recording_state = "pause";
+	alert("pause");
+});
+
