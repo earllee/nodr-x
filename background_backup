@@ -20,17 +20,11 @@ var pushUpdate = function() {
       parent : {url : parentURL, title : parentTitle},
       child : {url : currURL, title : currTitle}
     };
-	
-	$.getJSON("http://www.nodr.me/new_link?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
-		console.log(data);
-	});
   }
-else {
+//  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
 $.getJSON("http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
 	console.log(data);
 });
-}
-//  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
   console.log(sendInfo);
 
   var myText = JSON.stringify(sendInfo);
@@ -52,15 +46,13 @@ console.log(myText);
 
 /*  $.ajax({
     type: 'POST',
-    url: 'https://www.nodr.me/' + type,
-    dataType: 'json',
+    url: 'http://www.nodr.me/' + type,
+    dataType: 'jsonp',
     success: function (msg) {
       if (msg) {
         // Do nothing
-        console.log(msg);
       }
       else {
-        console.log(msg);
         // Force login
       }
     },

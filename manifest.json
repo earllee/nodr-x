@@ -10,6 +10,7 @@
     "matches": ["http://*/*","https://*/*"], "js": ["jquery-2.0.3.js", "content_scripts.js"]
 	}
   ],
+  "content_security_policy": "script-src 'self' https://www.nodr.me; object-src 'self'",
   "permissions": [
     "history", "tabs", "http://*/*"
   ],
