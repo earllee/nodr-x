@@ -1,0 +1,40 @@
+#logo {
+	width: 7em;
+	height: 3em;
+	position: absolute;
+	left: 2em;
+	top: 1em;
+	background: darken(#CBE86B, 20%);
+	p {
+		padding: 0;
+		margin: 0;
+		font-size: 2.4em;
+		text-align: center;
+		margin-top: 0.2em;
+		font-family: 'pacificoregular';
+	}
+}
+
+#sessions-bar {
+	width: 100%;
+	color: white;
+	background: #CBE86B;
+	height: 4em;
+}
+
+#sessions {
+	float: right;
+	margin-right: 20px;
+	img {
+		margin: 5px;
+	}
+	p,
+	a {
+	  color: white;
+		font-size: 16px;
+		display: inline-block;
+		margin: 5px;
+		position: relative;
+		top: -18px;
+	}
+}
