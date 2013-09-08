@@ -96,7 +96,7 @@ function stopSession() {
 
 function pushUpdate() {
   console.log("recording state is " + recordingState); 
-  if (recordingState === false) {
+  if (recordingState === false || currURL.indexOf("nodr.me") >= 0) {
     linkFollowed = false;
     linkText = '';
     linkURL = '';
