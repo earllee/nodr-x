@@ -45,10 +45,11 @@ function authenticateUser() {
 }
 
 function loadRecommendations() {
-  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
+/*  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
     chrome.extension.getBackgroundPage().recs = data;
     renderRecs();
   });
+*/
 }
 
 function pauseSession() {
