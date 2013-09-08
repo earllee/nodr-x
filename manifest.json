@@ -1,26 +1,38 @@
 {
   "manifest_version": 2,
-
-  "name": "Nodr-x",
+  "name": "Nodr: Browse Better",
   "description": "This extension records a browsing session.",
   "version": "1.0",
-  "background": { "page" : "background.html"},
+  "background": {
+    "page" : "background.html"
+  },
   "content_scripts": [{
-    "matches": ["http://*/*","https://*/*"], "js": ["jquery-2.0.3.js", "content_scripts.js"]
+    "matches": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "js": [
+      "jquery-2.0.3.js",
+      "content_scripts.js"
+    ]
 	}],
   "content_security_policy": "script-src 'self' https://www.nodr.me; object-src 'self'",
   "permissions": [
-    "history", "tabs", "http://*/*"
+    "history",
+    "tabs",
+    "http://*/*"
   ],
   "browser_action": {
+    "default_title": "Nodr Control",
+    "default_popup": "popup.html",
     "default_icon": {
       "19" : "images/icon19.png",
       "38" : "images/icon38.png"
-    },
-     "default_title": "Nodr Control",
-     "default_popup": "popup.html"    
+    }  
   },
-  "icons": { "16": "images/icon16.png",
-                     "48": "images/icon48.png",
-                     "128": "images/icon128.png" }
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
 }

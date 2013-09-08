@@ -10,25 +10,33 @@
   </head>
   <body>
 
-  <nav class="navbar navbar-inverse" role="navigation">
-    <div id="logo" class="box"><a href="http://www.nodr.me" > </a></div>
-    <div class="box"><a id="record" class="control-button" href="#"><i class="icon-large icon-circle white-icon"></i></a></div>
-    <div class="box"><a id="pause" class="control-button" href="#"><i class="icon-large icon-pause white-icon"></i></a></div>
-    <div class="box"><a id="stop" class="control-button" href="#"><i class="icon-large icon-stop white-icon"></i></a></div>
-    <a class="logo"></a>
-  </nav>
-  <div id="recommendations">
-    Recommendations
-  </div>
-  <div id="listing">
-    <div class="rec-box">
-      <span class="headline">Obama’s Battle for Votes on Syria Strike Is Taut and Uphill</span>
-      <p class="byline">NYTimes.com - by Mark Landler and Jonathan Weisman</p>
+  <nav class="navbar" role="navigation">
+    <a href="http://www.nodr.me" class="navbar-brand">Nodr</a>
+    <div class="btn-group pull-right" id="navbar-buttons">
+      <button id="record" class="btn btn-default">
+        <i class="icon-circle white-icon"></i>
+      </button>
+      <button id="pause" class="btn btn-default">
+        <i class="icon-pause white-icon"></i>
+      </button>
+      <button id="stop" class="btn btn-default">
+        <i class="icon-stop white-icon"></i>
+      </button>
     </div>
-    <div class="rec-box"></div>
-    <div class="rec-box"></div>
-    <div class="rec-box"></div>
+  </nav>
+  
+  <div id="listing">
+    <div class="listing-message">
+      <i class="ajax-spinner"></i>
+      <p>Loading...</p>
+    </div>
+    <!-- <div class="rec-box">
+          <span class="headline">Obama’s Battle for Votes on Syria Strike Is Taut and Uphill</span>
+          <p class="byline">NYTimes.com - by Mark Landler and Jonathan Weisman</p>
+        </div> -->
   </div>
+  
+  <div id="see-more">More Recommendations...</div>
 
   </body>
     <script type="text/javascript" src="jquery-2.0.3.js"></script>

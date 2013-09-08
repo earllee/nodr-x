@@ -1,6 +1,5 @@
 body {
   width:280px;
-  height:352px;
   font-family: 'Open sans', sans-serif;
 }
 
@@ -8,11 +7,47 @@ h4 {
   font-size: 18px;
 }
 
+.navbar-brand {
+  font-family: 'Pacifico', cursive;
+  color: #DDD;
+  font-size: 145%;
+  transition: 0.2s;
+}
+
+.navbar a:focus,
+.navbar button:focus {
+  outline: none;
+}
+
+.navbar a:hover {
+  color: #777;
+}
+
 .navbar {
   width: 280px;
-  height: 40px;
-  min-height:40px;
+  height: 50px;
+  min-height: 50px;
   margin-bottom: 0px;
+  border-bottom: 1px solid #dadada;
+}
+
+#navbar-buttons {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.white-icon {
+  color: #dadada;
+}
+
+.white-icon:hover {
+  color: #45ADA8;
+}
+
+#play:hover,
+#pause:hover,
+#stop:hover {
+  color: #45ADA8;
 }
 
 .box {
@@ -38,33 +73,35 @@ h4 {
   border-bottom: none;
 }
 
-#logo {
-  background: url('../images/icon-gray50.png') no-repeat center;
-  background-size: 25px;
-  width: 69px;
-  height: 40px;
-}
-
-#logo:hover {
-  background: url('../images/icon-white50.png') no-repeat center;
-  background-size: 25px;
-  width: 69px;
-  height: 40px;
-}
-
 #listing {
   margin: 0px 5px 0px 5px;
   height: 280px;
 }
 
-#recommendations {
-  font-family: 'Pacifico', cursive;
-  font-size: 18px;
+.listing-message {
+  margin-top: 30px;
+}
+
+.ajax-spinner {
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin: auto;
+  background-image: url("/images/loader.gif");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.listing-message p {
+  text-align: center;
+}
+
+#see-more {
   text-align: center;
   vertical-align: middle;
-  background: #ddd;
-  height: 32px;
-  line-height: 32px;
+  border-top: 1px solid #dadada;
+  background: #fafafa;
+  line-height: 40px;
 }
 
 .headline {
@@ -75,13 +112,5 @@ h4 {
 .byline {
   font-size: 10px;
   color: #999;
-}
-.white-icon {
-  color: #ddd;
-}
-
-.white-icon:hover {
-  color: #fff;
-text-decoration: none;
 }
 
