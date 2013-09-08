@@ -20,11 +20,17 @@ var pushUpdate = function() {
       parent : {url : parentURL, title : parentTitle},
       child : {url : currURL, title : currTitle}
     };
+	
+	$.getJSON("http://www.nodr.me/new_link?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
+		console.log(data);
+	});
   }
-//  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
+else {
 $.getJSON("http://www.nodr.me/new_node?params=" + encodeURIComponent(JSON.stringify(sendInfo)), function (data) {
 	console.log(data);
 });
+}
+//  $.getJSON("http://www.nodr.me/new_link?currentURL=" + encodeURIComponent(currURL) + "&currentTitle=" + encodeURIComponent(currTitle) + "&parentURL=" + encodeURIComponent(parentURL) + "&parentTitle=" + encodeURIComponent(parentTitle), function(data) { 
   console.log(sendInfo);
 
   var myText = JSON.stringify(sendInfo);
