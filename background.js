@@ -88,6 +88,7 @@ function stopSession() {
       $("#recording").hide();
       $("#pause")
       $("#record").show();
+      chrome.tabs.create({'url': "http://www.nodr.me/last_graph"});
     });
   }
 }
