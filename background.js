@@ -12,8 +12,6 @@ var parentTitle = "";
 var recs = {};
 var recordingState = NOTRECORDING;
 
-var INITIALIZED = 0;
-
 function logger(string) {
   chrome.extension.getBackgroundPage().console.log(string);
 }
@@ -36,7 +34,7 @@ function setupHtml() {
 }
 
 function renderRecs() {
-  logger("listing");
+  chrome.extension.getBackgroundPage().console.log("listing")
   $("#listing").html(chrome.extension.getBackgroundPage().recs);
 }
 
@@ -47,11 +45,13 @@ function authenticateUser() {
 }
 
 function loadRecommendations() {
-/*  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
+  chrome.extension.getBackgroundPage().console.log("current url", currURL);
+  $.get("http://www.nodr.me/recommendations?url=" + encodeURIComponent(currURL), function(data) {
     chrome.extension.getBackgroundPage().recs = data;
+    chrome.extension.getBackgroundPage().console.log(chrome.extension.getBackgroundPage().recs);
     renderRecs();
   });
-*/
+
 }
 
 function pauseSession() {
@@ -166,6 +166,7 @@ chrome.runtime.onMessage.addListener(function (request, response, sendResponse) 
 // Initialize
 setupHtml();
 authenticateUser();
+renderRecs();
 
 // Events
 $("#pause").click(function() {
