@@ -23,7 +23,7 @@
     "http://*/*"
   ],
   "browser_action": {
-    "default_title": "Nodr Control",
+    "default_title": "Nodr Browser",
     "default_popup": "popup.html",
     "default_icon": {
       "19" : "images/icon19.png",

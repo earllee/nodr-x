@@ -94,6 +94,10 @@ function pushUpdate() {
   linkURL = '';
 };
 
+chrome.browserAction.onClicked.addListener(function (request) {
+  chrome.extension.getBackgroundPage().console.log("HELLO");
+});
+
 chrome.extension.onRequest.addListener(function (request, response) {
   alert("HELLO");
 });
