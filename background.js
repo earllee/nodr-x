@@ -6,8 +6,16 @@ var linkURL = "";
 var currURL = "";
 var currTitle = "";
 var parentTitle ="";
+var recording_state = "on";
 
 var pushUpdate = function() { 
+  if (recording_state === "off")
+  {
+    linkFollowed = false;
+    linkText = '';
+    linkURL = '';
+    return;
+  }
   var type = (linkFollowed) ? 'new_link' : 'new_node';
 
   var sendInfo = {
